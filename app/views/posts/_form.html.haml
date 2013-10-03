@@ -1,0 +1,21 @@
+%div.post-form
+  = form_for @post do |f|
+    - if @post.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+        %ul
+          - @post.errors.full_messages.each do |msg|
+            %li= msg
+    .form-group
+      = f.label :Title
+      = f.text_field :title, :class => 'form-control'
+    .form-group
+      = f.label :Content
+      = f.text_area :body, :rows => 12, :class => 'form-control', 'data-provide' => 'markdown'
+    .form-group
+      .glyphicon.glyphicon-tags 
+      = f.label :tags
+      = text_field_tag 'post[tags]'
+    .actions
+      = f.submit 'Save', :class => 'btn btn-success'
+      = link_to 'Back', posts_path, :class => 'btn btn-info' 

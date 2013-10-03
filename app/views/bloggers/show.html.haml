@@ -1,0 +1,53 @@
+- if @blogger.provider == "blogrz"
+  %img{:src => "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@blogger.email.downcase.chomp)}?s=150&d=mm"}
+  %h6 
+    Not your image? Try
+    %a{:href => "https://en.gravatar.com/"} Gravatar
+- elsif @blogger.provider == "twitter"
+  %img{:src => "#{@blogger.image}"}
+%hr
+%h5 
+  Member since
+  %b
+    = @blogger.confirmed_at.strftime("%d-%m-%Y")
+.form-group
+  %b
+    Username
+    .input-group
+      %span.input-group-addon
+      %input.form-control{value: "#{@blogger.nickname}", readonly: true, type: "text"}
+- if @blogger.provider == "twitter"
+  .form-group
+    %b
+      Authentication provider
+      .input-group
+        %span.input-group-addon
+        %input.form-control{value: "#{@blogger.provider.capitalize}", readonly: true, type: "text"} 
+- else
+  .form-group
+    %b
+      Email-ID
+      .input-group
+        %span.input-group-addon
+        %input.form-control{value: "#{@blogger.email}", readonly: true, type: "text"}
+- if @blogger.name
+  .form-group
+    %b
+      Name
+      .input-group
+        %span.input-group-addon
+        %input.form-control{value: "#{@blogger.name}", readonly: true, type: "text"}
+- if @blogger.hometown
+  .form-group
+    %b
+      Hometown
+      .input-group
+        %span.input-group-addon
+        %input.form-control{value: "#{@blogger.hometown}", readonly: true, type: "text"}
+- if @blogger == current_blogger && @blogger.provider != "twitter" 
+  = link_to "Improve your Profile", edit_blogger_registration_path, :class => 'btn btn-primary'
+- elsif @blogger == current_blogger
+  %h3
+    Not statisfied?
+  #{link_to "Cancel my account", registration_path(@blogger), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "btn btn-danger"}
+

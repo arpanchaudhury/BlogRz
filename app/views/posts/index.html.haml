@@ -1,0 +1,7 @@
+- if current_blogger
+  .fixed
+    = link_to 'New Post', new_post_path, :class => "btn btn-default btn-lg"
+= render :partial => 'index'
+.pages
+  .apple_pagination
+    = will_paginate @posts, :container => false  

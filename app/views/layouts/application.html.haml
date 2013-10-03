@@ -1,0 +1,43 @@
+%html
+  %head
+    %title Blog
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .header
+      %nav.navbar.navbar-inverse.navbar-fixed-top
+        %ul.nav.navbar-nav
+          %li
+            = link_to 'Home', root_path
+          - if !blogger_signed_in?
+            %li
+              = link_to 'Sign up', new_blogger_registration_path
+            %li
+              %a{:href => '/about'} About
+            %li
+              %a{:href => '/contact'} Contact
+          - else            
+            %li
+              = link_to 'Favorites', favorite_posts_path
+        - if blogger_signed_in?
+          %ul.nav.navbar-right
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                %span.glyphicon.glyphicon-cog
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  = link_to 'View Profile', show_blogger_profile_path(:provider => current_blogger.provider, 
+									:nickname => current_blogger.nickname)
+                - if current_blogger.provider != "twitter"
+                  %li
+                    = link_to 'Edit Profile', edit_blogger_registration_path          
+                %li
+                  = link_to 'Sign Out', destroy_blogger_session_path, :method => :delete
+    .container
+      = yield
+    - if notice
+      .alert-info.navbar-fixed-bottom= notice
+    - if alert
+      .alert-danger.navbar-fixed-bottom= alert

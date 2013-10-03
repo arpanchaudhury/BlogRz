@@ -1,0 +1,50 @@
+%h2
+  Edit profile
+%div.devise-form
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    %div.form-group
+      = f.label :nickname
+      %div.input-group
+        %span.input-group-addon
+        = f.text_field :nickname, :readonly => true, :class => 'form-control'
+    %div.form-group
+      = f.label :email
+      %div.input-group
+        %span.input-group-addon
+        = f.email_field :email, :class => 'form-control'
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      %div
+        Currently waiting confirmation for: #{resource.unconfirmed_email}
+    %div.form-group
+      = f.label :name
+      %div.input-group
+        %span.input-group-addon
+        = f.text_field :name, :class => 'form-control'
+    %div.form-group
+      = f.label :hometown
+      %div.input-group
+        %span.input-group-addon
+        = f.text_field :hometown, :class => 'form-control'
+    %div.form-group
+      = f.label :password
+      %i (leave blank if you don't want to change it)
+      %div.input-group
+        %span.input-group-addon
+        = f.password_field :password, :autocomplete => "off", :class => 'form-control'
+    %div.form-group
+      = f.label :password_confirmation
+      %div.input-group
+        %span.input-group-addon
+        = f.password_field :password_confirmation, :class => 'form-control'
+    %div.form-group
+      = f.label :current_password
+      %i (we need your current password to confirm your changes)
+      %div.input-group
+        %span.input-group-addon
+        = f.password_field :current_password, :class => 'form-control'
+    = f.submit "Update", :class => "btn btn-success btn-lg"  
+= devise_error_messages!
+%h3 
+  Not statisfied?
+  #{link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => "btn btn-danger"} 
+

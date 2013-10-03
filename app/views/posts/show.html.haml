@@ -1,0 +1,54 @@
+.panel.panel-default
+  .panel-heading
+    %b
+      .glyphicon.glyphicon-book
+      = @post.title.capitalize
+      .pull-right
+        - if !current_blogger.favorites.include?("#{@post.id}")
+          = link_to '', add_to_favorites_path, :class => 'glyphicon glyphicon-star-empty'
+        -else
+          = link_to '', remove_from_favorites_path, :class => 'glyphicon glyphicon-star'
+        - if @post.blogger != current_blogger 
+          = link_to '', vote_up_path, :class => 'glyphicon glyphicon-thumbs-up'
+          = link_to '', vote_down_path, :class => 'glyphicon glyphicon-thumbs-down'
+          .glyphicon.glyphicon-user
+          = link_to "#{@post.blogger.nickname}", show_blogger_profile_path(@post.blogger.provider, @post.blogger.nickname)
+        - else
+          = link_to '', edit_post_path(@post), :class => 'glyphicon glyphicon-edit'
+          = link_to '', post_path, :method => :delete, :data => { :confirm => 'Are you sure?' } , :class => 'glyphicon glyphicon-remove-circle'
+  .panel-body
+    = BlueCloth.new(@post.body).to_html.html_safe
+  .panel-footer
+    .glyphicon.glyphicon-tags
+    - @post.tags.each do |tag|
+      = tag
+    .pull-right
+      .glyphicon.glyphicon-calendar
+      = @post.published_on.strftime("%a %d-%m-%Y")
+%h4
+  %b{:class => 'glyphicon glyphicon-thumbs-up'}= " #{@post.vote_up.count}"
+  %b{:class => 'glyphicon glyphicon-thumbs-down'}= " #{@post.vote_down.count}"
+%hr
+.comments-container
+  - if @post.comments.size > 0
+    %h2
+      .glyphicon.glyphicon-comment 
+      Comments
+    - for comment in @post.comments
+      .panel.panel-info
+        .panel-heading
+          %b
+            - if current_blogger == comment.blogger
+              .pull-right
+                = link_to '', post_comment_path(@post._id, comment._id), :method => "delete", :class => 'glyphicon glyphicon-remove'
+            .glyphicon.glyphicon-user
+              = link_to "#{comment.blogger.nickname}", show_blogger_profile_path(comment.blogger.provider, comment.blogger.nickname)
+        .panel-body
+          = comment.content
+  - if current_blogger
+    %h4 Comment
+    = form_for [@post, Comment.new] do |f|
+      .form-group
+        = f.text_area :content, :rows => 5, :cols => 60
+      .form-group
+        = f.submit :class => 'btn btn-primary'

@@ -1,0 +1,43 @@
+.canvas
+  .map
+    %img{:id => 'location-map', :src => 'http://maps.googleapis.com/maps/api/staticmap?center=22.6102374,88.4060168&zoom=9&size=800x350&maptype=roadmap&markers=color:blue|22.6102374,88.4060168&sensor=false', :style => 'width:800'}
+    .zoom-buttons
+      %h3
+        %a.glyphicon.glyphicon-zoom-in{:href => '#', :onclick => "zoom_in()"}
+      %h3
+        %a.glyphicon.glyphicon-zoom-out{:href => '#', :onclick => "zoom_out()"}
+  %div.pull-right.well.well-lg{:style => "width:26%"}
+    .row
+      .col-md-1
+        %span.glyphicon.glyphicon-user
+      .col-md-10
+        Arpan Chaudhury
+    %br
+    .row
+      .col-md-1
+        %span.glyphicon.glyphicon-map-marker
+      .col-md-10
+        103/2 Sarat Chatterjee Road, 
+        %br
+        Kolkata - 700089
+    %br
+    .row
+      .col-md-1
+        %span.glyphicon.glyphicon-phone
+      .col-md-10
+        +91-8017185440
+    %br
+    .row
+      .col-md-1
+        %span.glyphicon.glyphicon-phone-alt
+      .col-md-10
+        +91-33-2573-1370
+    %br
+    .row
+      .col-md-1
+        %span.glyphicon.glyphicon-envelope 
+      .col-md-10
+        arpanchaudhury@gmail.com
+  %br
+  %br
+  %a.btn.btn-success.btn-lg{:href => 'mailto:arpanchaudhury@gmail.com'} FEEL FREE TO CONTACT
